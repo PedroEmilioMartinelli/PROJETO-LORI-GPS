@@ -1,0 +1,39 @@
+.container {
+  padding: 16px;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  margin-top: 10px;
+}
+
+.list {
+  list-style: none;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item {
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+}
+
+.itemTitle { font-weight: 600; margin-bottom: 4px; }
+.itemSubtitle { font-size: 0.85rem; color: var(--muted); }
+
+.row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:8px 0;
+  border-bottom: 1px dashed rgba(0,0,0,0.03);
+}
+
+.row:last-child { border-bottom: none; }

@@ -1,0 +1,59 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  height: calc(100vh - 48px - 56px); /* header + bottom nav */
+  background: transparent;
+}
+
+/* Search bar like prototype */
+.searchBar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+  background: var(--orange);
+  border-radius: 10px;
+}
+
+.searchBar input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  outline: none;
+  font-size: 0.95rem;
+  background: rgba(255,255,255,0.95);
+}
+
+.editBtn {
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: white;
+  border: none;
+  font-size: 0.95rem;
+}
+
+/* Filters row */
+.filters {
+  display: flex;
+  gap: 8px;
+}
+
+.filters select {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.95);
+}
+
+/* Map container wrapper */
+.mapWrap {
+  flex: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  min-height: 300px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
