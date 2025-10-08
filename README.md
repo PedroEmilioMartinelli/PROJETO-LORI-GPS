@@ -63,17 +63,6 @@ Acesse no navegador: [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 🔗 APIs Utilizadas
-
-| API | Descrição |
-|------|------------|
-| **Nominatim (OpenStreetMap)** | Busca e sugestão de endereços |
-| **OSRM** | Cálculo de rotas e distâncias |
-| **Overpass** | Consulta de pontos de interesse (POIs) |
-| **HTML5 Geolocation** | Localização aproximada do usuário |
-
----
-
 ## 👥 Desenvolvido por
 
 **Bruno de Souza**  
