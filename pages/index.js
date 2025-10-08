@@ -4,27 +4,43 @@ import styles from "../style/Auth.module.css";
 
 export default function Login() {
   const router = useRouter();
-  const [usuario, setUsuario] = useState("");
-  const [senha, setSenha] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleLogin = e => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (usuario.trim() && senha.trim()) {
-      localStorage.setItem("usuario", usuario);
+    setBusy(true);
+    setError("");
+    try {
+      const r = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || "Falha no login");
+      localStorage.setItem("session", JSON.stringify({ token: data.token, user: data.user }));
+      localStorage.setItem("usuario", data.user.email);
       router.push("/mapa");
-    } else {
-      alert("Preencha usuário e senha!");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setBusy(false);
     }
   };
 
   return (
     <div className={styles.container}>
-      <h1>Login GPS</h1>
+      <img src="https://i.imgur.com/HOX87tN.png"></img>
+      <h1>Faça Login</h1>
       <form onSubmit={handleLogin} className={styles.form}>
-        <input type="text" placeholder="Usuário" onChange={e => setUsuario(e.target.value)} />
-        <input type="password" placeholder="Senha" onChange={e => setSenha(e.target.value)} />
-        <button type="submit">Entrar</button>
+        <input type="email" placeholder="E-mail" onChange={e => setEmail(e.target.value)} required />
+        <input type="password" placeholder="Senha" onChange={e => setPassword(e.target.value)} required />
+        <button type="submit" disabled={busy}>{busy ? "Entrando..." : "Entrar"}</button>
       </form>
+      {error && <p className={styles.error}>{error}</p>}
       <p onClick={() => router.push("/cadastro")} className={styles.link}>
         Criar conta
       </p>

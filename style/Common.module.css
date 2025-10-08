@@ -1,39 +1,11 @@
-.container {
-  padding: 16px;
-}
-
-.card {
-  background: white;
-  border-radius: 10px;
-  padding: 12px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-  margin-top: 10px;
-}
-
-.list {
-  list-style: none;
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.item {
-  background: white;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #f0f0f0;
-}
-
-.itemTitle { font-weight: 600; margin-bottom: 4px; }
-.itemSubtitle { font-size: 0.85rem; color: var(--muted); }
-
-.row {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:8px 0;
-  border-bottom: 1px dashed rgba(0,0,0,0.03);
-}
-
-.row:last-child { border-bottom: none; }
+.container{padding:16px;max-width:900px;margin:0 auto}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.row{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:8px 0}
+.list{list-style:none;padding:0;margin:0}
+.item{padding:12px;border-bottom:1px solid var(--line)}
+.itemTitle{font-weight:600}
+.itemSubtitle{opacity:.7;font-size:.9rem}
+.ok{margin-left:8px;opacity:.8}
+.mapControls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.mapControls input{padding:8px;border:1px solid var(--line);border-radius:8px;min-width:260px}
+.mapControls button{padding:8px 12px;border:1px solid var(--line);background:var(--surface);border-radius:10px}

@@ -1,40 +1,54 @@
 import { useEffect, useState } from "react";
+import styles from "../style/Common.module.css";
 
 export default function Perfil() {
   const [nome, setNome] = useState("");
   const [telefone, setTelefone] = useState("");
   const [rotas, setRotas] = useState([]);
+  const [user, setUser] = useState(null);
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    const user = localStorage.getItem("usuario");
-    if (!user) window.location.href = "/";
-    const dados = JSON.parse(localStorage.getItem("perfil") || "{}");
-    setNome(dados.nome || "");
-    setTelefone(dados.telefone || "");
+    const session = JSON.parse(localStorage.getItem("session") || "null");
+    if (!session) { window.location.href = "/"; return; }
+    setUser(session.user);
+    fetch(`/api/profile?userId=${encodeURIComponent(session.user.id)}`)
+      .then(r => r.json())
+      .then(d => { setNome(d.nome || ""); setTelefone(d.telefone || ""); });
+
     const r = JSON.parse(localStorage.getItem("rotas") || "[]");
     setRotas(r);
   }, []);
 
-  const salvar = () => {
-    localStorage.setItem("perfil", JSON.stringify({ nome, telefone }));
-    alert("Perfil salvo!");
+  const salvar = async () => {
+    if (!user) return;
+    await fetch(`/api/profile?userId=${encodeURIComponent(user.id)}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nome, telefone })
+    });
+    setSaved(true);
+    setTimeout(()=>setSaved(false), 1500);
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Perfil</h1>
-      <p>Usuário: {localStorage.getItem("usuario")}</p>
-      <label>Nome:</label>
-      <input value={nome} onChange={e => setNome(e.target.value)} />
-      <label>Telefone:</label>
-      <input value={telefone} onChange={e => setTelefone(e.target.value)} />
-      <button onClick={salvar}>Salvar</button>
+    <div className={styles.container}>
+      <h2>Perfil</h2>
+      <div className={styles.card}>
+        <div className={styles.row}><span>Nome</span><input value={nome} onChange={e => setNome(e.target.value)} /></div>
+        <div className={styles.row}><span>Telefone</span><input value={telefone} onChange={e => setTelefone(e.target.value)} /></div>
+        <button onClick={salvar}>Salvar</button>
+        {saved && <span className={styles.ok}>Salvo!</span>}
+      </div>
 
       <h2>Histórico de Rotas</h2>
-      <ul>
+      <ul className={styles.list}>
         {rotas.map((r, i) => (
-          <li key={i}>
-            {r.data} - Origem ({r.origem.lat.toFixed(3)}, {r.origem.lng.toFixed(3)}) → Destino ({r.destino.lat.toFixed(3)}, {r.destino.lng.toFixed(3)})
+          <li key={i} className={styles.item}>
+            <div className={styles.itemTitle}>
+              {r.origem?.nome} → {r.destino?.nome}
+            </div>
+            <div className={styles.itemSubtitle}>{r.data}</div>
           </li>
         ))}
       </ul>
